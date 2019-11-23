@@ -1,0 +1,10 @@
+{
+  "app": {
+      "port": "PORT"
+  },
+  "mongo-db": {
+      "host": "MONGO_DB_HOST",
+      "port": "MONGO_DB_PORT",
+      "name": "MONGO_DB_NAME"
+  }
+}

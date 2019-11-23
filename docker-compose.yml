@@ -1,0 +1,25 @@
+version: '3.2'
+
+services:
+  server:
+    build: ./
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/usr/app
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    command: npm start
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-data-volume:/data/db
+    ports:
+      - "27017:${MONGO_DB_PORT}"
+volumes: 
+  mongo-data-volume:
