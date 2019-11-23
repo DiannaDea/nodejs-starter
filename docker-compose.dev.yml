@@ -4,22 +4,30 @@ services:
   server:
     build: ./
     depends_on:
-      - mongo
+      - db
     volumes:
       - ./:/usr/app
     ports:
-      - "${PORT}:${PORT}"
+      - "${APP_PORT}:${APP_PORT}"
     env_file:
       - .env
     environment:
       - NODE_ENV=development
     command: npm run dev
-  mongo:
-    image: mongo
+  db:
+    image: mysql:5.7
     restart: always
-    volumes:
-      - mongo-data-volume:/data/db
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     ports:
-      - "27017:${MONGO_DB_PORT}"
-volumes: 
-  mongo-data-volume:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+    expose:
+      - "${MYSQL_PORT}"
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:

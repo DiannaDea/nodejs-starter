@@ -1,22 +1,24 @@
 const config = require('config')
-const Mongoose = require('mongoose')
+const Sequelize = require('sequelize');
 const logger = require('../services/logger')
-
-Mongoose.Promise = global.Promise
 
 const {
   host,
   name,
-  port
-} = config['mongo-db']
+  user,
+  password
+} = config.db
 
-const connString = `mongodb://${host}:${port}/${name}`
+const sequelize = new Sequelize(name, user, password, {
+  host,
+  dialect: 'mysql'
+});
 
-Mongoose
-    .connect(connString, {useNewUrlParser: true})
-    .then(() => {
-      logger.info('Connection to MongoDB has been established successfully.')
-    })
-    .catch((err) => {
-      logger.error('Unable to connect to the MongoDB database:', err)
-    })
+sequelize
+  .authenticate()
+  .then(() => {
+    logger.info('Connection has been established successfully.');
+  })
+  .catch(err => {
+    logger.error('Unable to connect to the database:', err);
+  });

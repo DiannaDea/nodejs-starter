@@ -1,10 +1,12 @@
 {
   "app": {
-      "port": "PORT"
+      "port": "APP_PORT"
   },
-  "mongo-db": {
-      "host": "MONGO_DB_HOST",
-      "port": "MONGO_DB_PORT",
-      "name": "MONGO_DB_NAME"
+  "db": {
+      "host": "MYSQL_DB_HOST",
+      "port": "MYSQL_PORT",
+      "name": "MYSQL_DATABASE",
+      "user": "MYSQL_USER",
+      "password": "MYSQL_PASSWORD"
   }
 }

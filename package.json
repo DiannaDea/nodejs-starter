@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node ./server",
     "dev": "./node_modules/nodemon/bin/nodemon.js ./server",
-    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build -d",
-    "docker:prod": "docker-compose -f docker-compose.yml up --build -d",
-    "docker:stop": "docker-compose down",
-    "docker:status": "docker-compose ps",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:prod": "docker-compose -f docker-compose.yml up --build",
+    "docker:stop": "docker-compose -f docker-compose.dev.yml down",
+    "docker:status": "docker-compose -f docker-compose.dev.yml ps",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix",
     "watch:lint": "node ./node_modules/eslint-watch/bin/esw -w --fix"
   },
@@ -29,7 +29,8 @@
     "koa-joi-router": "^6.0.0",
     "koa-logger": "^3.2.0",
     "koa-respond": "^2.1.0",
-    "mongoose": "^5.6.4",
+    "mysql2": "^2.0.1",
+    "sequelize": "^5.21.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
