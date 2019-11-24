@@ -6,7 +6,7 @@ const UsersList = ({ users }) => {
   const getGroups = (user) => {
     return user.groups.map(group => {
       return (
-        <Link to="/">{group.name + '   '}</Link>
+        <Link to="/" key={group.id}>{group.name + '   '}</Link>
       )
     })
   }

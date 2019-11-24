@@ -6,6 +6,7 @@ import {
   Nav,
   Button
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 import { getTokensFromLocalStorage } from '../../utils/tokenManagement'
 
 const Header  = ({ handleLogout }) => {
@@ -21,7 +22,12 @@ const Header  = ({ handleLogout }) => {
           <Nav className="mr-auto" navbar />
           {
             (getTokensFromLocalStorage())
-              ? <Button color="link" onClick={handleLogout}>Logout</Button>
+              ? (
+                <React.Fragment>
+                  <Link to="/create-user">Create user</Link>
+                  <Button color="link" onClick={handleLogout}>Logout</Button>
+                </React.Fragment>
+              )
               : <p>Please login</p>
           }
         </Collapse>
