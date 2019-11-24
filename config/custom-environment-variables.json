@@ -8,5 +8,8 @@
       "name": "MYSQL_DATABASE",
       "user": "MYSQL_USER",
       "password": "MYSQL_PASSWORD"
+  },
+  "token": {
+    "secret": "JWT_SECRET"
   }
 }

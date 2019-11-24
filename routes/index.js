@@ -1,7 +1,9 @@
 const userRouter = require('./user')
+const authRouter = require('./auth');
 
 module.exports = {
   routes: [
-    userRouter.middleware()
+    userRouter.middleware(),
+    authRouter.middleware()
   ]
 }

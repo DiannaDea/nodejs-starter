@@ -1,20 +1,64 @@
 const router = require('koa-joi-router')
+const UserConstoller = require('../controllers/user');
+const { authMiddleware, checkUserExists } = require('../middleware');
 
-const userRouter = router()
+const userRouter = router();
 
 const {Joi} = router
 
-userRouter.prefix('/users')
+userRouter.prefix('/api/users')
+
+userRouter.use(authMiddleware);
 
 userRouter.route({
   method: 'get',
-  path: '/:username',
+  path: '/',
+  handler: UserConstoller.getAll
+})
+
+userRouter.route({
+  method: 'post',
+  path: '/',
   validate: {
+    type: 'json',
+    body: {
+      login: Joi.string().required(),
+      password: Joi.string().required(),
+      fullName: Joi.string().required(),
+      groupIds: Joi.array().items(Joi.number()).required()
+    },
+  },
+  handler: UserConstoller.create
+})
+
+// userRouter.use(checkUserExists)
+
+userRouter.route({
+  method: 'delete',
+  path: '/:userId',
+  validate: {
+    type: 'json',
     params: {
-      username: Joi.string().required()
+      userId: Joi.number().required(),
+    },
+  },
+  handler: [checkUserExists, UserConstoller.delete]
+})
+
+userRouter.route({
+  method: 'patch',
+  path: '/:userId',
+  validate: {
+    type: 'json',
+    params: {
+      userId: Joi.number().required(),
+    },
+    body: {
+      fullName: Joi.string(),
+      groupIds: Joi.array().items(Joi.number())
     }
   },
-  handler: (ctx) => ctx.send(200, `Hello ${ctx.params.username}`)
+  handler: [checkUserExists, UserConstoller.update]
 })
 
 module.exports = userRouter
