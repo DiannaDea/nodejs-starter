@@ -5,7 +5,7 @@ import {
   GET_USERS_ERROR
 } from '../../actions/users/types'
 
-export default (state = initialState.auth, action = {}) => {
+export default (state = initialState.users, action = {}) => {
   const { type } = action
 
   const typeToFunc = {
@@ -16,13 +16,13 @@ export default (state = initialState.auth, action = {}) => {
     [GET_USERS_SUCCESS]: () => ({
       ...state,
       isFetching: false,
-      users: action.payload.users,
+      data: action.payload.users,
       error: null
     }),
     [GET_USERS_ERROR]: () => ({
       ...state,
       isFetching: false,
-      users: [],
+      data: [],
       error: action.payload
     })
   }

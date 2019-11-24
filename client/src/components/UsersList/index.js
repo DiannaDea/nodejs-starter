@@ -1,3 +1,3 @@
-import UsersList from './UsersList.view'
+import UsersList from './UsersList.redux'
 
 export default UsersList

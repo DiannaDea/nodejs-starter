@@ -2,24 +2,20 @@ import { put, call } from 'redux-saga/effects'
 import { getUsersSuccess, getUsersError } from '../../actions/users/usersActions'
 import requestAPI from '../../../utils/requestAPI'
 
-const { REACT_APP_MAPPING_REST_API_URL: MAPPING_REST_API_URL } = process.env
-
 export default function* getJobs({ payload }) {
   try {
     const response = yield call(requestAPI, {
-      url: `${MAPPING_REST_API_URL}/api/spooler/v1/jobs`,
+      url: 'http://localhost:5000/api/users',
       method: 'GET',
       params: payload,
       isProtected: true
     })
 
     const {
-      data: {
-        result: jobs
-      }
+      data: users
     } = response
 
-    yield put(getUsersSuccess(jobs))
+    yield put(getUsersSuccess({users}))
   } catch (error) {
     yield put(getUsersError(error))
   }
