@@ -4,7 +4,8 @@ import {
   GET_USERS_ERROR,
   CREATE_USER_REQUEST,
   CREATE_USER_SUCCESS,
-  CREATE_USER_ERROR
+  CREATE_USER_ERROR,
+  SET_CUR_USER
 } from './types'
 
 export const getUsersRequest = (payload = {}) => ({
@@ -34,5 +35,10 @@ export const createUserSuccess = (payload = {}) => ({
 
 export const createUserError = (payload = {}) => ({
   type: CREATE_USER_ERROR,
+  payload
+})
+
+export const setCurrentUser = (payload = {}) => ({
+  type: SET_CUR_USER,
   payload
 })

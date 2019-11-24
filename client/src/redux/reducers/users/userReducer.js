@@ -5,7 +5,8 @@ import {
   GET_USERS_ERROR,
   CREATE_USER_REQUEST,
   CREATE_USER_SUCCESS,
-  CREATE_USER_ERROR
+  CREATE_USER_ERROR,
+  SET_CUR_USER
 } from '../../actions/users/types'
 
 export default (state = initialState.users, action = {}) => {
@@ -42,6 +43,10 @@ export default (state = initialState.users, action = {}) => {
       ...state,
       isFetching: false,
       error: action.payload
+    }),
+    [SET_CUR_USER]: () => ({
+      ...state,
+      curUser: action.payload.curUser
     })
   }
 

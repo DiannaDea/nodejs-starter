@@ -13,6 +13,8 @@ class UsersListContainer extends React.Component {
     return (
       <UsersListView
         users={this.props.users}
+        setCurrentUser={this.props.setCurrentUser}
+        curUser={this.props.curUser}
       />
     )
   }

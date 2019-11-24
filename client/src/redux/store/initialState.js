@@ -11,6 +11,7 @@ export default {
   },
   users: {
     data: [],
-    error: null
+    error: null,
+    curUser: null
   }
 }
