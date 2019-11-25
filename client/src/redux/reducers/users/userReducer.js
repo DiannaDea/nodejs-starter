@@ -6,7 +6,13 @@ import {
   CREATE_USER_REQUEST,
   CREATE_USER_SUCCESS,
   CREATE_USER_ERROR,
-  SET_CUR_USER
+  SET_CUR_USER,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_ERROR,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR
 } from '../../actions/users/types'
 
 export default (state = initialState.users, action = {}) => {
@@ -47,7 +53,47 @@ export default (state = initialState.users, action = {}) => {
     [SET_CUR_USER]: () => ({
       ...state,
       curUser: action.payload.curUser
-    })
+    }),
+    [DELETE_USER_REQUEST]: () => ({
+      ...state,
+      isFetching: true
+    }),
+    [DELETE_USER_SUCCESS]: () => ({
+      ...state,
+      isFetching: false,
+      data: state.data.filter(user => user.id !== action.payload.userId),
+      curUser: null,
+      error: null
+    }),
+    [DELETE_USER_ERROR]: () => ({
+      ...state,
+      isFetching: false,
+      error: action.payload
+    }),
+    [UPDATE_USER_REQUEST]: () => ({
+      ...state,
+      isFetching: true
+    }),
+    [UPDATE_USER_SUCCESS]: () => ({
+      ...state,
+      isFetching: false,
+      data: state.data.map(user => {
+        if (user.id === action.payload.userId) {
+          return {
+            ...user,
+            ...action.payload.user
+          }
+        }
+        return user
+      }),
+      curUser: null,
+      error: null
+    }),
+    [UPDATE_USER_ERROR]: () => ({
+      ...state,
+      isFetching: false,
+      error: action.payload
+    }),
   }
 
   const actionHandler = typeToFunc[type] || (() => state)

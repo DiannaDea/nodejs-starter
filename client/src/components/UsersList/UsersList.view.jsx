@@ -16,14 +16,17 @@ class UsersList extends React.Component {
 
   showModal = (user) => {
     this.setState({ show: true });
-    console.log('====this.props', this.props)
     this.props.setCurrentUser({curUser: user})
   };
 
   hideModal = () => {
     this.setState({ show: false });
   };
-
+  
+  handleUserDelete = () => {
+    this.props.handleUserDelete()
+    this.hideModal()
+  }
 
   render() {
     return (
@@ -53,7 +56,12 @@ class UsersList extends React.Component {
             }
           </tbody>
         </Table>
-        <DeleteModal show={this.state.show} hideModal={this.hideModal} curUser={this.props.curUser} />
+        <DeleteModal
+          show={this.state.show}
+          hideModal={this.hideModal}
+          curUser={this.props.curUser}
+          handleUserDelete={this.handleUserDelete}
+        />
       </React.Fragment>
     )
   }

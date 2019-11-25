@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const DeleteUserModal = ({show, hideModal, curUser}) => {
+const DeleteUserModal = ({show, hideModal, curUser, handleUserDelete}) => {
   return (
     <div>
       <Modal isOpen={show} toggle={hideModal}>
-        <ModalHeader toggle={hideModal}>Modal title</ModalHeader>
+        <ModalHeader toggle={hideModal}>Delete user</ModalHeader>
         <ModalBody>
-          {(curUser) ? curUser.fullName : ''}
+          Are you sure to delete user: {(curUser) ? curUser.fullName : ''} ?
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={hideModal}>Do Something</Button>{' '}
           <Button color="secondary" onClick={hideModal}>Cancel</Button>
+          <Button color="danger" onClick={handleUserDelete}>Delete</Button>{' '}
         </ModalFooter>
       </Modal>
     </div>

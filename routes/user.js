@@ -37,7 +37,6 @@ userRouter.route({
   method: 'delete',
   path: '/:userId',
   validate: {
-    type: 'json',
     params: {
       userId: Joi.number().required(),
     },

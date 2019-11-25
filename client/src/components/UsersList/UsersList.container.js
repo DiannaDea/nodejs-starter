@@ -9,12 +9,33 @@ class UsersListContainer extends React.Component {
     this.props.getUsers()
   }
 
+  handleUserDelete = () => {
+    const { curUser, deleteUser } = this.props;
+
+    if (curUser) {
+      deleteUser({userId: curUser.id})
+    }
+  }
+
+  handleUserUpdate = (updateParams) => {
+    const { curUser, updateUser } = this.props;
+
+    if (curUser) {
+      updateUser({
+        userId: curUser.id,
+        updateParams 
+      })
+    }
+  }
+
   render() {
     return (
       <UsersListView
         users={this.props.users}
         setCurrentUser={this.props.setCurrentUser}
         curUser={this.props.curUser}
+        handleUserDelete={this.handleUserDelete}
+        handleUserUpdate={this.handleUserUpdate}
       />
     )
   }

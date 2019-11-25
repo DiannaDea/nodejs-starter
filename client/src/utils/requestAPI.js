@@ -12,12 +12,17 @@ export default (requestParams) => {
 
   const token = getTokensFromLocalStorage()
   
+  const headers = {
+    'Content-Type': 'application/json',
+    ...((isProtected) ? { Authorization: token } : null),
+  }
+
+  console.log('===headers', headers)
+
   return axios({
     method,
     url,
-    headers: {
-      ...((isProtected) ? { Authorization: token } : null)
-    },
+    headers,
     ...({ data } || null),
     ...({ params } || null)
   })
