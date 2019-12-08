@@ -78,13 +78,9 @@ export default (state = initialState.users, action = {}) => {
       ...state,
       isFetching: false,
       data: state.data.map(user => {
-        if (user.id === action.payload.userId) {
-          return {
-            ...user,
-            ...action.payload.user
-          }
-        }
-        return user
+        return (user.id === action.payload.userId)
+          ? action.payload.updatedUser
+          : user
       }),
       curUser: null,
       error: null

@@ -6,21 +6,19 @@ export default function* updateUser({ payload }) {
   try {
     const response = yield call(requestAPI, {
       url: `http://localhost:5000/api/users/${payload.userId}`,
-      method: 'PATCH',
+      method: 'PUT',
       data: payload.updateParams,
       isProtected: true
     })
 
     const {
-      data: isUpdated
+      data: updatedUser
     } = response
 
-    if (isUpdated) {
-      yield put(updateUserSuccess({
-        userId: payload.userId,
-        user: payload
-      }))
-    }
+    yield put(updateUserSuccess({
+      userId: payload.userId,
+      updatedUser
+    }))
   } catch (error) {
     yield put(updateUserError(error))
   }

@@ -1,3 +1,3 @@
-import DeleteUserModal from './DeleteUserModal.container'
+import DeleteUserModal from './DeleteUserModal.view'
 
 export default DeleteUserModal

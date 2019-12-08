@@ -54,7 +54,6 @@ const UserProvider = {
   },
 
   updateUser: async (userId, params) => {
-    console.log('====params', params)
     try {
       const { fullName, groupIds } = params;
 

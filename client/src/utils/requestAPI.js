@@ -17,8 +17,6 @@ export default (requestParams) => {
     ...((isProtected) ? { Authorization: token } : null),
   }
 
-  console.log('===headers', headers)
-
   return axios({
     method,
     url,

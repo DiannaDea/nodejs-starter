@@ -22,7 +22,6 @@ export default function* login({ payload }) {
 
     yield put(loginSuccess({ token }))
   } catch (error) {
-    console.log('=====errr', error)
     const {
       response: {
         data: {

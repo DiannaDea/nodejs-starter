@@ -71,10 +71,17 @@ const UserController = {
       }
 
       const isUpdated = await UserProvider.updateUser(userId, paramsForUpdate);
+      
+      if (isUpdated) {
+        const user = await UserProvider.getUser({ id : userId})
 
-      return (isUpdated)
-        ? ctx.send(200, { isUpdated })
-        : ctx.send(500, { error: `Unable to update user with id: ${userId}`})
+        return ctx.send(200, getUserWithGroups(
+          user,
+          await UserGroupsProvider.getUserGroups(user.id)
+        ))
+      }
+
+      return ctx.send(500, { error: `Unable to update user with id: ${userId}`})
     } catch (error) {
       return ctx.send(500, { error: error.message })
     }

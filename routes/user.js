@@ -45,7 +45,7 @@ userRouter.route({
 })
 
 userRouter.route({
-  method: 'patch',
+  method: 'put',
   path: '/:userId',
   validate: {
     type: 'json',
