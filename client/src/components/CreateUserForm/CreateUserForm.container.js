@@ -66,8 +66,6 @@ class CreateUserForm extends React.Component {
   }
 
   render() {
-    console.log('==this.state', this.state);
-
     return (
       <CreateUserFormView
         handleInputChange={this.handleInputChange}

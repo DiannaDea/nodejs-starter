@@ -5,23 +5,40 @@ import { getTokensFromLocalStorage } from '../../utils/tokenManagement'
 
 class HeaderContainer extends React.Component {
   state = {
-    login: '',
-    password: ''
+    login: {
+      text: '',
+      isValid: false
+    },
+    password: {
+      text: '',
+      isValid: false
+    }
   }
 
   handleInputChange = (inputType, value) => {
+    const validations = {
+      login: (value) => value && value.length >= 5,
+      password: (value) => value && value.length >= 3,
+    }
+
     this.setState({
-      [inputType]: value
+      [inputType]: {
+        text: value,
+        isValid: validations[inputType](value)
+      }
     })
   }
 
   handleLogin = () => {
-    const { login } = this.props;
+    const { login: loginRequest } = this.props;
+    const { login, password } = this.state;
 
-    login({
-      login: this.state.login,
-      password: this.state.password
-    })
+    if (login.isValid && password.isValid) {
+      loginRequest({
+        login: login.text,
+        password: password.text
+      })
+    }
   }
 
   render() {
@@ -34,6 +51,8 @@ class HeaderContainer extends React.Component {
               <LoginFormView
                 handleInputChange={this.handleInputChange}
                 handleLogin={this.handleLogin}
+                loginInputValid={this.state.login.isValid}
+                passwordInputValid={this.state.password.isValid}
               />
             )
         }

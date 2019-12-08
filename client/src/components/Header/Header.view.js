@@ -38,7 +38,7 @@ const Header  = ({ handleLogout, authorizedUsed }) => {
                   <Button color="link" onClick={handleLogout}>Logout</Button>
                 </React.Fragment>
               )
-              : <p>Please login</p>
+              : <NavbarText>Please login</NavbarText>
           }
         </Collapse>
       </Navbar>
