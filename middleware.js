@@ -27,6 +27,7 @@ const authMiddleware = async (ctx, next) => {
       });
     }
     
+    ctx.authorizedUser = user;
     await next();
   } catch(err) {
     return ctx.send(400, err.message);
@@ -35,7 +36,7 @@ const authMiddleware = async (ctx, next) => {
 
 const checkUserExists = async (ctx, next) => {
   const { userId } = ctx.params;
-  const user = await GroupProvider.getUser({ id: userId });
+  const user = await UserProvider.getUser({ id: userId });
 
   if (!user) {
     return ctx.send(404, {
@@ -60,8 +61,21 @@ const checkGroupExists = async (ctx, next) => {
   await next();
 }
 
+const checkAdminRole = async (ctx, next) => {
+  const { authorizedUser } = ctx;
+
+  if (!authorizedUser.isAdmin) {
+    return ctx.send(403, {
+      error: 'Forbidden'
+    })
+  }
+
+  await next();
+}
+
 module.exports = {
   authMiddleware,
   checkUserExists,
-  checkGroupExists
+  checkGroupExists,
+  checkAdminRole
 }

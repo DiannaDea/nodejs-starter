@@ -1,6 +1,6 @@
 const router = require('koa-joi-router')
 const UserConstoller = require('../controllers/user');
-const { authMiddleware, checkUserExists } = require('../middleware');
+const { authMiddleware, checkUserExists, checkAdminRole } = require('../middleware');
 
 const userRouter = router();
 
@@ -28,7 +28,7 @@ userRouter.route({
       groupIds: Joi.array().items(Joi.number()).required()
     },
   },
-  handler: UserConstoller.create
+  handler: [checkAdminRole, UserConstoller.create]
 })
 
 userRouter.route({
@@ -39,7 +39,7 @@ userRouter.route({
       userId: Joi.number().required(),
     },
   },
-  handler: [checkUserExists, UserConstoller.delete]
+  handler: [checkAdminRole, checkUserExists, UserConstoller.delete]
 })
 
 userRouter.route({
@@ -55,7 +55,7 @@ userRouter.route({
       groupIds: Joi.array().items(Joi.number())
     }
   },
-  handler: [checkUserExists, UserConstoller.update]
+  handler: [checkAdminRole, checkUserExists, UserConstoller.update]
 })
 
 module.exports = userRouter
