@@ -4,9 +4,7 @@ import { logout, loginRequest } from '../../redux/actions/auth/authActions'
 import HeaderContainer from './Header.container'
 
 const mapStateToProps = state => ({
-  // username: (state.auth.user) ? state.auth.user.username : 'Username',
-  // accessToken: state.auth.tokens.accessToken,
-  // refreshToken: state.auth.tokens.refreshToken
+  authorizedUsed: state.auth.user,
 })
 
 const mapDispatchToProps = dispatch => ({

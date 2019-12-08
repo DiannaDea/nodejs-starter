@@ -11,7 +11,8 @@ import UsersListContainer from './UsersList.container'
 const mapStateToProps = state => ({
   token: state.auth.token,
   users: state.users.data,
-  curUser: state.users.curUser
+  curUser: state.users.curUser,
+  authorizedUsed: state.auth.user,
 })
 
 const mapDispatchToProps = dispatch => ({

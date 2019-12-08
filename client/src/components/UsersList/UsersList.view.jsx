@@ -38,6 +38,8 @@ class UsersList extends React.Component {
   }
 
   render() {
+    const { authorizedUsed } = this.props;
+
     return (
       <React.Fragment>
         <Table>
@@ -46,7 +48,11 @@ class UsersList extends React.Component {
               <th>Login</th>
               <th>Full Name</th>
               <th>Groups</th>
-              <th>Manage</th>
+              {
+                (authorizedUsed && authorizedUsed.isAdmin)
+                  ? <th>Manage</th>
+                  : null
+              }
             </tr>
           </thead>
           <tbody>
@@ -56,20 +62,26 @@ class UsersList extends React.Component {
                   <td>{user.login}</td>
                   <td>{user.fullName}</td>
                   <td>{this.getGroups(user)}</td>
-                  <td>
-                    <Button
-                      color="primary"
-                      onClick={() => this.showModal('showUpdateModal', user)}
-                    >
-                      Update
-                    </Button>{' '}
-                    <Button
-                      color="danger"
-                      onClick={() => this.showModal('showDeleteModal', user)}
-                    >
-                      Delete
-                    </Button>{' '}
-                  </td>
+                  {
+                    (authorizedUsed && authorizedUsed.isAdmin)
+                      ? (
+                        <td>
+                          <Button
+                            color="primary"
+                            onClick={() => this.showModal('showUpdateModal', user)}
+                          >
+                            Update
+                          </Button>{' '}
+                          <Button
+                            color="danger"
+                            onClick={() => this.showModal('showDeleteModal', user)}
+                          >
+                            Delete
+                          </Button>{' '}
+                        </td>
+                      )
+                      : null
+                  }
                 </tr>
               ))
             }

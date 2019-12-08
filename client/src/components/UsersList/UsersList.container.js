@@ -36,6 +36,7 @@ class UsersListContainer extends React.Component {
         curUser={this.props.curUser}
         handleUserDelete={this.handleUserDelete}
         handleUserUpdate={this.handleUserUpdate}
+        authorizedUsed={this.props.authorizedUsed}
       />
     )
   }
