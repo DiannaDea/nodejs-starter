@@ -16,18 +16,6 @@ authRouter.route({
       login: Joi.string().required(),
       password: Joi.string().required()
     },
-    output: {
-      200: {
-        body: {
-          token: Joi.string().required(),
-        }
-      },
-      404: {
-        body: {
-          error: Joi.string().required()
-        }
-      }
-    }
   },
   handler: AuthController.login,
 });

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { UserGroup, Group } = require('../models')
+const { UserGroup, Group, User } = require('../models')
 
 const Op = Sequelize.Op;
 

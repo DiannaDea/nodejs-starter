@@ -31,8 +31,6 @@ userRouter.route({
   handler: UserConstoller.create
 })
 
-// userRouter.use(checkUserExists)
-
 userRouter.route({
   method: 'delete',
   path: '/:userId',
