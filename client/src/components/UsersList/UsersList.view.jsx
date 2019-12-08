@@ -13,7 +13,7 @@ class UsersList extends React.Component {
   getGroups = (user) => {
     return user.groups.map(group => {
       return (
-        <Link to="/" key={group.id}>{group.name + '   '}</Link>
+        <Link to={`/groups/${group.id}/users`} key={group.id}>{group.name + '   '}</Link>
       )
     })
   }

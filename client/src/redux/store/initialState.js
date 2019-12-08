@@ -13,5 +13,9 @@ export default {
     data: [],
     error: null,
     curUser: null
+  },
+  groups: {
+    groupUsers: [],
+    error: null,
   }
 }
