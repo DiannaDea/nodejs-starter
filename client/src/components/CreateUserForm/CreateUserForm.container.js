@@ -3,9 +3,18 @@ import CreateUserFormView from './CreateUserForm.view'
 
 class CreateUserForm extends React.Component {
   state = {
-    login: '',
-    password: '',
-    fullName: '',
+    login: {
+      text: '',
+      isValid: false
+    },
+    password: {
+      text: '',
+      isValid: false,
+    },
+    fullName: {
+      text: '',
+      isValid: false
+    },
     groupIds: []
   }
 
@@ -16,8 +25,17 @@ class CreateUserForm extends React.Component {
   }
 
   handleInputChange = (inputType, value) => {
+    const validations = {
+      login: (value) => value && value.length >= 5,
+      password: (value) => value && value.length >= 3,
+      fullName: (value) => value && value.length >= 1,
+    }
+
     this.setState({
-      [inputType]: value
+      [inputType]: {
+        text: value,
+        isValid: validations[inputType](value)
+      }
     })
   }
 
@@ -35,21 +53,29 @@ class CreateUserForm extends React.Component {
 
   handleUserCreate = () => {
     const { createUser } = this.props;
+    const { login, password, fullName } = this.state
 
-    createUser({
-      login: this.state.login,
-      password: this.state.password,
-      fullName: this.state.fullName,
-      groupIds: this.state.groupIds,
-    })
+    if (login.isValid && password.isValid && fullName.isValid) {
+      createUser({
+        login: login.text,
+        password: password.text,
+        fullName: fullName.text,
+        groupIds: this.state.groupIds,
+      });
+    }
   }
 
   render() {
+    console.log('==this.state', this.state);
+
     return (
       <CreateUserFormView
         handleInputChange={this.handleInputChange}
         handleCheckboxSelect={this.handleCheckboxSelect}
         handleCreateUser={this.handleUserCreate}
+        loginInputValid={this.state.login.isValid}
+        passwordInputValid={this.state.password.isValid}
+        fullNameInputValid={this.state.fullName.isValid}
       />
     )
   }
