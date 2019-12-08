@@ -8,12 +8,16 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  FormFeedback
 } from 'reactstrap';
 
 class UpdateUserModal extends React.Component {
   state = {
-    fullName: '',
+    fullName: {
+      text: '',
+      isValid: true,
+    },
     groupIds: [
       { id: 1, checked: false, name: 'Administrators' },
       { id: 2, checked: false, name: 'Team A' },
@@ -39,8 +43,15 @@ class UpdateUserModal extends React.Component {
   }
 
   handleInputChange = (inputType, value) => {
+    const validations = {
+      fullName: (value) => value && value.length >= 1,
+    }
+
     this.setState({
-      [inputType]: value
+      [inputType]: {
+        text: value,
+        isValid: validations[inputType](value)
+      }
     })
   }
 
@@ -66,16 +77,21 @@ class UpdateUserModal extends React.Component {
   }
 
   handleUserUpdate = () => {
-    const { curUser } = this.props;
-
+    const { curUser, handleUserUpdate } = this.props;
+    const { fullName } = this.state;
+  
     const groupIds = this.state.groupIds
       .filter(groupCheckBox => groupCheckBox.checked)
       .map(groupCheckBox => groupCheckBox.id)
     
-    this.props.handleUserUpdate({
-      fullName: (!this.state.fullName.length) ? curUser.fullName : this.state.fullName,
-      groupIds
-    })
+    if (fullName.text.length && fullName.isValid) {
+      handleUserUpdate({
+        fullName: (!fullName.text.length)
+          ? curUser.fullName
+          : fullName.text,
+        groupIds
+      })
+    }
   }
 
   render() {
@@ -90,12 +106,14 @@ class UpdateUserModal extends React.Component {
             <FormGroup>
               <Label for="fullName">Full name</Label>
               <Input
+                {...(this.state.fullName.isValid) ? {valid: true} : {invalid: true }} 
                 type="text"
                 name="fullName"
                 id="fullName"
                 defaultValue={curUser ? curUser.fullName : ''}
                 onChange={(e) => this.handleInputChange('fullName', e.target.value)}
               />
+              <FormFeedback>Full name is required</FormFeedback>
             </FormGroup>
             {
               this.state.groupIds.map(groupCheckBox => {
