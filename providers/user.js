@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, sequelize } = require('../models')
 const UserGroupsProvider = require('./usergroups');
 
 const UserProvider = {
@@ -22,19 +22,22 @@ const UserProvider = {
   createUser: async (params) => {
     const { groupIds, ...userInfo } = params;
 
-    const user = await User
-      .build({ 
-        ...userInfo,
-        isAdmin: false,
-        createdAt: new Date(),
-        updatedAd: new Date()
-       })
-      .save()
+    return sequelize.transaction(async function (t) {
+      const user = await User
+        .build({ 
+          ...userInfo,
+          isAdmin: false,
+          createdAt: new Date(),
+          updatedAd: new Date()
+        })
+        .save()
 
-    const createdUser = user.get({ plain: true });
-    await UserGroupsProvider.addUserGroups(createdUser.id, groupIds);
+        const createdUser = user.get({ plain: true });
 
-    return createdUser
+        await UserGroupsProvider.addUserGroups(createdUser.id, groupIds);
+
+        return createdUser;
+    });
   },
 
   deleteUser: async (userId) => {
