@@ -22,9 +22,9 @@ userRouter.route({
   validate: {
     type: 'json',
     body: {
-      login: Joi.string().required(),
-      password: Joi.string().required(),
-      fullName: Joi.string().required(),
+      login: Joi.string().regex(/^[\w\d]{5,15}$/).required(),
+      password: Joi.string().regex(/^[\w\d$_]{3,30}$/).required(),
+      fullName: Joi.string().regex(/^[\w\d\s]{1,30}$/).required(),
       groupIds: Joi.array().items(Joi.number()).required()
     },
   },
@@ -51,7 +51,7 @@ userRouter.route({
       userId: Joi.number().required(),
     },
     body: {
-      fullName: Joi.string(),
+      fullName: Joi.string().regex(/^[\w\d\s]{1,30}$/),
       groupIds: Joi.array().items(Joi.number())
     }
   },

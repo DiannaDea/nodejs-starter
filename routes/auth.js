@@ -13,8 +13,8 @@ authRouter.route({
   validate: {
     type: 'json',
     body: {
-      login: Joi.string().required(),
-      password: Joi.string().required()
+      login: Joi.string().regex(/^[\w\d]{5,15}$/).required(),
+      password: Joi.string().regex(/^[\w\d$_]{3,30}$/).required()
     },
   },
   handler: AuthController.login,
